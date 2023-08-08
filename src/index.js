@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import "./index.css";
 
 // eslint-disable-next-line
 const pizzaData = [
@@ -49,7 +50,7 @@ const pizzaData = [
 
 function App() {
   return (
-    <div>
+    <div className="container">
       <Header />
       <Menu />
       <Footer />
@@ -59,15 +60,15 @@ function App() {
 
 function Header() {
   return (
-    <div>
+    <header className="header">
       <h1>This is the header!!!</h1>
-    </div>
+    </header>
   );
 }
 
 function Menu() {
   return (
-    <div>
+    <div className="menu">
       <h2>This is the menu</h2>
       <Pizza />
       <Pizza />
@@ -78,7 +79,7 @@ function Menu() {
 
 function Footer() {
   return (
-    <footer>
+    <footer className="footer">
       We're currently open. The current time is: {new Date().toLocaleString()}
     </footer>
   );
