@@ -1,52 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
+import pizzaData from "./pizzaData";
 
 // eslint-disable-next-line
-const pizzaData = [
-  {
-    name: "Focaccia",
-    ingredients: "Bread with italian olive oil and rosemary",
-    price: 6,
-    photoName: "pizzas/focaccia.jpg",
-    soldOut: false,
-  },
-  {
-    name: "Pizza Margherita",
-    ingredients: "Tomato and mozarella",
-    price: 10,
-    photoName: "pizzas/margherita.jpg",
-    soldOut: false,
-  },
-  {
-    name: "Pizza Spinaci",
-    ingredients: "Tomato, mozarella, spinach, and ricotta cheese",
-    price: 12,
-    photoName: "pizzas/spinaci.jpg",
-    soldOut: false,
-  },
-  {
-    name: "Pizza Funghi",
-    ingredients: "Tomato, mozarella, mushrooms, and onion",
-    price: 12,
-    photoName: "pizzas/funghi.jpg",
-    soldOut: false,
-  },
-  {
-    name: "Pizza Salamino",
-    ingredients: "Tomato, mozarella, and pepperoni",
-    price: 15,
-    photoName: "pizzas/salamino.jpg",
-    soldOut: true,
-  },
-  {
-    name: "Pizza Prosciutto",
-    ingredients: "Tomato, mozarella, ham, aragula, and burrata cheese",
-    price: 18,
-    photoName: "pizzas/prosciutto.jpg",
-    soldOut: false,
-  },
-];
 
 function App() {
   return (
@@ -67,14 +24,18 @@ function Header() {
 }
 
 function Menu() {
+  const pizzas = pizzaData;
+
   return (
     <main className="menu">
       <h2>This is the menu</h2>
-      <ul className="pizzas">
-        {pizzaData.map((pizza) => (
-          <Pizza pizzaObj={pizza} key={pizza.name} />
-        ))}
-      </ul>
+      {pizzas.length > 0 && (
+        <ul className="pizzas">
+          {pizzas.map((pizza) => (
+            <Pizza pizzaObj={pizza} key={pizza.name} />
+          ))}
+        </ul>
+      )}
     </main>
   );
 }
@@ -93,9 +54,24 @@ function Pizza(props) {
 }
 
 function Footer() {
+  const open = 9;
+  const close = 21;
+  const crrTime = new Date().getHours();
+  const leftTime = close - crrTime;
+
+  const isOpen = crrTime >= open && crrTime <= close;
+
   return (
     <footer className="footer">
-      We're currently open. The current time is: {new Date().toLocaleString()}
+      {!isOpen || (
+        <div className="order">
+          <p>
+            We are open until {leftTime} hour{leftTime > 1 ? "s" : ""}... Fuck
+            you!!!
+          </p>
+          <button className="btn">Order Now!</button>
+        </div>
+      )}
     </footer>
   );
 }
