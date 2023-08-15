@@ -25,16 +25,21 @@ function Header() {
 
 function Menu() {
   const pizzas = pizzaData;
+  // const pizzas = [];
 
   return (
     <main className="menu">
       <h2>This is the menu</h2>
-      {pizzas.length > 0 && (
+      {pizzas.length > 0 ? (
         <ul className="pizzas">
           {pizzas.map((pizza) => (
             <Pizza pizzaObj={pizza} key={pizza.name} />
           ))}
         </ul>
+      ) : (
+        <p className="error">
+          No pizzas to display right now! Come back later!
+        </p>
       )}
     </main>
   );
@@ -54,7 +59,7 @@ function Pizza(props) {
 }
 
 function Footer() {
-  const open = 9;
+  const open = 1;
   const close = 21;
   const crrTime = new Date().getHours();
   const leftTime = close - crrTime;
@@ -63,15 +68,21 @@ function Footer() {
 
   return (
     <footer className="footer">
-      {!isOpen || (
-        <div className="order">
+      <div className="order">
+        {isOpen ? (
+          <>
+            <p>
+              We are open until {leftTime} hour{leftTime > 1 ? "s" : ""}... Fuck
+              you!!!
+            </p>
+            <button className="btn">Order Now!</button>
+          </>
+        ) : (
           <p>
-            We are open until {leftTime} hour{leftTime > 1 ? "s" : ""}... Fuck
-            you!!!
+            We r closed right now! Come back between: {open}:00 & {close}:00
           </p>
-          <button className="btn">Order Now!</button>
-        </div>
-      )}
+        )}
+      </div>
     </footer>
   );
 }
