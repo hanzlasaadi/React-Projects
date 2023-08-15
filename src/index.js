@@ -31,11 +31,17 @@ function Menu() {
     <main className="menu">
       <h2>This is the menu</h2>
       {pizzas.length > 0 ? (
-        <ul className="pizzas">
-          {pizzas.map((pizza) => (
-            <Pizza pizzaObj={pizza} key={pizza.name} />
-          ))}
-        </ul>
+        <React.Fragment>
+          <p>
+            Authentic Italian Cuisine. Six authentic dishes to chose from. All
+            from our stone oven, authentic and natural ingredients. Order Now!
+          </p>
+          <ul className="pizzas">
+            {pizzas.map((pizza) => (
+              <Pizza pizzaObj={pizza} key={pizza.name} />
+            ))}
+          </ul>
+        </React.Fragment>
       ) : (
         <p className="error">
           No pizzas to display right now! Come back later!
@@ -45,14 +51,21 @@ function Menu() {
   );
 }
 
-function Pizza(props) {
+function Pizza({ pizzaObj }) {
+  // REMOVE a pizza listed if sold out
+  // if (pizzaObj.soldOut) return null;
+
+  // GREY OUT a pizza listed if sold out
   return (
-    <li className="pizza">
-      <img src={props.pizzaObj.photoName} alt={props.pizzaObj.name} />
+    <li className={`pizza ${pizzaObj.soldOut ? "sold-out" : ""}`}>
+      <img src={pizzaObj.photoName} alt={pizzaObj.name} />
       <div>
-        <h3>{props.pizzaObj.name}</h3>
-        <p>{props.pizzaObj.ingredients}</p>
-        <span>{props.pizzaObj.price}</span>
+        <h3>{pizzaObj.name}</h3>
+        <p>{pizzaObj.ingredients}</p>
+
+        {/* <span>{pizzaObj.soldOut ? "Sold Out" : pizzaObj.price}</span> */}
+
+        <span>{pizzaObj.price}</span>
       </div>
     </li>
   );
@@ -68,22 +81,26 @@ function Footer() {
 
   return (
     <footer className="footer">
-      <div className="order">
-        {isOpen ? (
-          <>
-            <p>
-              We are open until {leftTime} hour{leftTime > 1 ? "s" : ""}... Fuck
-              you!!!
-            </p>
-            <button className="btn">Order Now!</button>
-          </>
-        ) : (
-          <p>
-            We r closed right now! Come back between: {open}:00 & {close}:00
-          </p>
-        )}
-      </div>
+      {isOpen ? (
+        <Order leftTime={leftTime} />
+      ) : (
+        <p>
+          We r closed right now! Come back between: {open}:00 & {close}:00
+        </p>
+      )}
     </footer>
+  );
+}
+
+function Order({ leftTime }) {
+  return (
+    <div className="order">
+      <p>
+        We are open until {leftTime} hour{leftTime > 1 ? "s" : ""}... Fuck
+        you!!!
+      </p>
+      <button className="btn">Order Now!</button>
+    </div>
   );
 }
 
