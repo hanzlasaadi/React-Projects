@@ -75,17 +75,53 @@ h3 {
   text-transform: uppercase;
 }
 
-.close {
+.hamburger-lines {
+  height: 26px;
+  width: 32px;
   position: absolute;
-  top: 16px;
-  right: 16px;
-  border: none;
-  background: none;
+  top: 20px;
+  right: 32px;
   cursor: pointer;
-  font-size: 40px;
-  color: inherit;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.close:hover {
-  color: #7950f2;
+.hamburger-lines:hover .line {
+  background: #7950f2;
+}
+
+.hamburger-lines .line {
+  display: block;
+  height: 4px;
+  width: 100%;
+  border-radius: 10px;
+  background: #0e2431;
+}
+
+.hamburger-lines .line1 {
+  transform-origin: 0% 0%;
+  transition: transform 0.4s ease-in-out;
+}
+
+.hamburger-lines .line2 {
+  transition: transform 0.2s ease-in-out;
+}
+
+.hamburger-lines .line3 {
+  transform-origin: 0% 100%;
+  transition: transform 0.4s ease-in-out;
+}
+
+.line1-toggle {
+  transform: rotate(45deg);
+}
+
+.line2-toggle {
+  transform: scaleY(0);
+}
+
+.line3-toggle {
+  transform: rotate(-45deg);
 }

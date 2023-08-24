@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const messages = [
   "Learn React ⚛️",
@@ -6,7 +6,19 @@ const messages = [
   "Invest your new income 🤑",
 ];
 
+function toggleBtn(element) {
+  element.querySelector(".line1").classList.toggle("line1-toggle");
+  element.querySelector(".line2").classList.toggle("line2-toggle");
+  element.querySelector(".line3").classList.toggle("line3-toggle");
+}
+
 export default function App() {
+  useEffect(() => {
+    // This code will run after the component has rendered
+    // toggleBtn(document.querySelector(".hamburger-lines"));
+    console.log("hey");
+    toggleBtn(document.querySelector(".hamburger-lines"));
+  }, []);
   const [step, setStep] = useState(1);
   const [isOpen, setIsOpen] = useState(true);
 
@@ -18,9 +30,18 @@ export default function App() {
   };
   return (
     <>
-      <button className="close" onClick={() => setIsOpen(!isOpen)}>
-        &times;
-      </button>
+      <div
+        className="hamburger-lines"
+        onClick={(e) => {
+          toggleBtn(e.currentTarget);
+          setIsOpen(!isOpen);
+        }}
+      >
+        <span className="line line1"></span>
+        <span className="line line2"></span>
+        <span className="line line3"></span>
+      </div>
+
       {!isOpen || (
         <div className="steps">
           <div className="numbers">
