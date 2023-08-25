@@ -52,6 +52,17 @@ body {
   justify-content: space-between;
 }
 
+.range {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.range label {
+  font-size: larger;
+  font-weight: bold;
+}
+
 .buttons button {
   border: none;
   cursor: pointer;
