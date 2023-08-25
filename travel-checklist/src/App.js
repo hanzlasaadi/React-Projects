@@ -18,9 +18,29 @@ export default function App() {
 function Logo() {
   return <h1>🌴 Logo 💼</h1>;
 }
+
 function Form() {
-  return <div className="add-form">What do you need for your trip???</div>;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(e);
+  };
+
+  return (
+    <form className="add-form" onSubmit={handleSubmit}>
+      <h3>What do you need for your trip???</h3>
+      <select>
+        {Array.from({ length: 20 }, (_, i) => i + 1).map((i) => (
+          <option value={i} key={i}>
+            {i}
+          </option>
+        ))}
+      </select>
+      <input type="text" placeholder="Item..." />
+      <button>Add</button>
+    </form>
+  );
 }
+
 function PackingList() {
   return (
     <div className="list">
