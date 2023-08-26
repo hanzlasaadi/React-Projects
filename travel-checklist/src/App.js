@@ -1,17 +1,24 @@
 import { useState } from "react";
+import { nanoid } from "nanoid";
 
-const initialItems = [
-  { id: 1, description: "Passports", quantity: 2, packed: false },
-  { id: 2, description: "Socks", quantity: 12, packed: true },
-  { id: 3, description: "Charger", quantity: 1, packed: false },
-];
+// const initialItems = [
+//   { id: 1, description: "Passports", quantity: 2, packed: false },
+//   { id: 2, description: "Socks", quantity: 12, packed: true },
+//   { id: 3, description: "Charger", quantity: 1, packed: false },
+// ];
 
 export default function App() {
+  const [item, setItem] = useState([]);
+
+  const addNewItem = (i) => {
+    setItem((items) => [...items, i]);
+  };
+
   return (
     <div className="app">
       <Logo></Logo>
-      <Form></Form>
-      <PackingList></PackingList>
+      <Form onNewItem={addNewItem}></Form>
+      <PackingList items={item}></PackingList>
       <Stats></Stats>
     </div>
   );
@@ -21,7 +28,7 @@ function Logo() {
   return <h1>🌴 Logo 💼</h1>;
 }
 
-function Form() {
+function Form({ onNewItem }) {
   const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState(1);
 
@@ -29,8 +36,9 @@ function Form() {
     e.preventDefault();
     if (!description) return;
 
-    const listItem = { description, quantity, packed: false, id: Date.now() };
+    const listItem = { description, quantity, packed: false, id: nanoid() };
     console.log(listItem);
+    onNewItem(listItem);
 
     // reset input/select values
     setDescription("");
@@ -61,11 +69,11 @@ function Form() {
   );
 }
 
-function PackingList() {
+function PackingList({ items }) {
   return (
     <div className="list">
       <ul>
-        {initialItems.map((obj) => (
+        {items.map((obj) => (
           <Item item={obj} key={obj.id} />
         ))}
       </ul>
