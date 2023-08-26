@@ -1,12 +1,6 @@
 import { useState } from "react";
 import { nanoid } from "nanoid";
 
-// const initialItems = [
-//   { id: 1, description: "Passports", quantity: 2, packed: false },
-//   { id: 2, description: "Socks", quantity: 12, packed: true },
-//   { id: 3, description: "Charger", quantity: 1, packed: false },
-// ];
-
 export default function App() {
   const [item, setItem] = useState([]);
 
@@ -18,11 +12,21 @@ export default function App() {
     setItem((items) => items.filter((i) => i.id !== id));
   };
 
+  const handleUpdateItem = (id) => {
+    setItem((items) =>
+      items.map((i) => (i.id === id ? { ...i, packed: !i.packed } : i))
+    );
+  };
+
   return (
     <div className="app">
       <Logo></Logo>
       <Form onNewItem={addNewItem}></Form>
-      <PackingList onDeleteItem={handleDeleteItem} items={item}></PackingList>
+      <PackingList
+        items={item}
+        onDeleteItem={handleDeleteItem}
+        onUpdateItem={handleUpdateItem}
+      ></PackingList>
       <Stats></Stats>
     </div>
   );
@@ -40,8 +44,9 @@ function Form({ onNewItem }) {
     e.preventDefault();
     if (!description) return;
 
+    // create new list object
     const listItem = { description, quantity, packed: false, id: nanoid() };
-    console.log(listItem);
+    // update state with new list object
     onNewItem(listItem);
 
     // reset input/select values
@@ -73,21 +78,31 @@ function Form({ onNewItem }) {
   );
 }
 
-function PackingList({ items, onDeleteItem }) {
+function PackingList({ items, onDeleteItem, onUpdateItem }) {
   return (
     <div className="list">
       <ul>
         {items.map((obj) => (
-          <Item onDeleteItem={onDeleteItem} item={obj} key={obj.id} />
+          <Item
+            onUpdateItem={onUpdateItem}
+            onDeleteItem={onDeleteItem}
+            item={obj}
+            key={obj.id}
+          />
         ))}
       </ul>
     </div>
   );
 }
 
-function Item({ item, onDeleteItem }) {
+function Item({ item, onDeleteItem, onUpdateItem }) {
   return (
     <li>
+      <input
+        type="checkbox"
+        value={item.packed}
+        onChange={() => onUpdateItem(item.id)}
+      />
       <span style={item.packed ? { textDecoration: "line-through" } : {}}>
         {item.quantity} {item.description}
       </span>
