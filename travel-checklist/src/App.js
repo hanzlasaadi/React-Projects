@@ -27,7 +27,7 @@ export default function App() {
         onDeleteItem={handleDeleteItem}
         onUpdateItem={handleUpdateItem}
       ></PackingList>
-      <Stats></Stats>
+      <Stats items={item}></Stats>
     </div>
   );
 }
@@ -111,12 +111,27 @@ function Item({ item, onDeleteItem, onUpdateItem }) {
   );
 }
 
-function Stats() {
+function Stats({ items }) {
+  if (items.length < 1)
+    return (
+      <footer className="stats">
+        <em>Prepare for your journey with us🚀</em>
+      </footer>
+    );
+  const numItems = items.length;
+  const packedItems = items.filter((item) => item.packed === true).length;
+  const percentage = Math.round((packedItems / numItems) * 100);
+
   return (
     <footer className="stats">
-      <em>
-        You have X items for your trip and you have packed X till now (X%)
-      </em>
+      {percentage !== 100 ? (
+        <em>
+          You have {numItems} item{numItems === 1 ? "" : "s"} for your trip and
+          you have packed {packedItems} till now ({percentage}%)
+        </em>
+      ) : (
+        <em>You have completed your travel list! Fly away ✈</em>
+      )}
     </footer>
   );
 }
