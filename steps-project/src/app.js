@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const messages = [
   "Learn React ⚛️",
@@ -21,12 +21,8 @@ export default function App() {
 }
 
 function Steps() {
-  useEffect(() => {
-    //This code will run after the component has rendered
-    toggleBtn(document.querySelector(".hamburger-lines"));
-  }, []);
   const [step, setStep] = useState(1);
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleNext = () => {
     if (step < 3) setStep((s) => s + 1);
