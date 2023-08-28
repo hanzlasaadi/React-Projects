@@ -1,0 +1,96 @@
+/* Reset default margin and padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Style for the main container */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+/* Style for the inner container */
+.container > div {
+  margin: 10px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f8f8f8;
+}
+
+/* Style for labels */
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+/* Style for input and select */
+input[type="number"],
+select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+/* Style for the h2 element */
+h2 {
+  margin-top: 20px;
+  font-size: 1.2em;
+}
+
+/* Style for the reset button */
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* Hover effect for the reset button */
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Style for select dropdown options */
+select option {
+  padding: 5px;
+}
+
+/* Adjust select dropdown appearance */
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+/* Styling option with emojis */
+option[value="0"]::before {
+  content: "😡";
+  margin-right: 5px;
+}
+
+option[value="5"]::before {
+  content: "😐";
+  margin-right: 5px;
+}
+
+option[value="10"]::before {
+  content: "👍";
+  margin-right: 5px;
+}
+
+option[value="20"]::before {
+  content: "👌";
+  margin-right: 5px;
+}
