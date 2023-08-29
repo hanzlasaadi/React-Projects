@@ -1,5 +1,7 @@
 // import uniqid from "uniqid";
 
+import { useState } from "react";
+
 const initialFriends = [
   {
     id: "llv0w93w",
@@ -21,12 +23,50 @@ const initialFriends = [
   },
 ];
 
+function Button({ onToggle, children }) {
+  return (
+    <button className="button" onClick={onToggle}>
+      {children}
+    </button>
+  );
+}
+
 export default function App() {
+  const [selectedFriend, setSelectedFriend] = useState(false);
+  const handleToggleAddFriend = () => {
+    setSelectedFriend(!selectedFriend);
+  };
+
   return (
     <div className="app">
       <div className="sidebar">
         <FriendsList />
+        {selectedFriend && <FormAddFriend />}
+        <Button onToggle={handleToggleAddFriend}>
+          {selectedFriend ? "Close" : "Add new friend"}
+        </Button>
       </div>
+
+      <form className="form-split-bill">
+        <h2>Split a bill with X</h2>
+
+        <label>💰 Total Bll value:</label>
+        <input type="number" />
+
+        <label>💶 Your Expense:</label>
+        <input type="number" />
+
+        <label>💸 X's Expense:</label>
+        <input type="number" disabled />
+
+        <label>💳 Who's paying the bill?</label>
+        <select>
+          <option>You</option>
+          <option>X</option>
+        </select>
+
+        <Button>Split Bill</Button>
+      </form>
     </div>
   );
 }
@@ -59,5 +99,30 @@ function Friend({ friend }) {
       )}
       <button className="button">Select</button>
     </li>
+  );
+}
+
+function FormAddFriend() {
+  const [image, setImage] = useState("https://i.pravatar.cc/48");
+  const [name, setName] = useState("");
+
+  return (
+    <form className="form-add-friend">
+      <label>👭Friend Name</label>
+      <input
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+
+      <label>📷Image Url</label>
+      <input
+        type="text"
+        value={image}
+        onChange={(e) => setImage(e.target.value)}
+      />
+
+      <Button>Add</Button>
+    </form>
   );
 }
