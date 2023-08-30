@@ -6,19 +6,19 @@ const initialFriends = [
   {
     id: "llv0w93w",
     name: "Clark",
-    image: "https://i.pravatar.cc/48?u=118836",
+    image: "https://i.pravatar.cc/48?u=llv0w93w",
     balance: -7,
   },
   {
     id: "llv10ot8",
     name: "Sarah",
-    image: "https://i.pravatar.cc/48?u=933372",
+    image: "https://i.pravatar.cc/48?u=llv10ot8",
     balance: 20,
   },
   {
     id: "llv117nf",
     name: "Anthony",
-    image: "https://i.pravatar.cc/48?u=499476",
+    image: "https://i.pravatar.cc/48?u=llv117nf",
     balance: 0,
   },
 ];
@@ -36,12 +36,21 @@ export default function App() {
   const [formAddFriend, setFormAddFriend] = useState(false);
   const handleToggleAddFriend = () => {
     setFormAddFriend(!formAddFriend);
+
+    // Close Split Bill Container
+    setFriendSelected(null);
+    setSelected(null);
   };
 
   // Friends list & Handle add new friend
   const [friends, setFriends] = useState(initialFriends);
   const handleAddNewFriend = (fr) => {
     setFriends([...friends, fr]);
+    setFormAddFriend(false);
+
+    // Auto-open split bill container with the newly added friend
+    setFriendSelected(fr.id);
+    setSelected(fr);
   };
 
   const [friendSelected, setFriendSelected] = useState(null);
@@ -50,6 +59,9 @@ export default function App() {
     const [selected] = friends.filter((fr) => fr.id === id);
     setFriendSelected(id);
     setSelected(selected);
+
+    // Closing addNewFriend Form
+    setFormAddFriend(false);
   };
 
   const handleSplitBill = (bal) => {
