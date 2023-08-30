@@ -45,9 +45,15 @@ export default function App() {
   };
 
   const [friendSelected, setFriendSelected] = useState(null);
+  const [selected, setSelected] = useState(null);
   const handleSelectFriend = (id) => {
+    const [selected] = friends.filter((fr) => fr.id === id);
     setFriendSelected(id);
+    setSelected(selected);
   };
+
+  // Calculating Selected Friend
+  // const selectedFriend = friends.filter((fr) => fr.id === friendSelected);
 
   return (
     <div className="app">
@@ -62,6 +68,7 @@ export default function App() {
           {formAddFriend ? "Close" : "Add new friend"}
         </Button>
       </div>
+      {friendSelected && <SplitBill friend={selected} />}
     </div>
   );
 }
@@ -111,7 +118,7 @@ function Friend({ friend, onSelectFriend, selectedFriend }) {
   );
 }
 
-function FormAddFriend({ onSubmit, onAddNewFriend }) {
+function FormAddFriend({ onAddNewFriend }) {
   const [image, setImage] = useState("https://i.pravatar.cc/48");
   const [name, setName] = useState("");
 
@@ -143,6 +150,31 @@ function FormAddFriend({ onSubmit, onAddNewFriend }) {
       />
 
       <Button>Add</Button>
+    </form>
+  );
+}
+
+function SplitBill({ friend }) {
+  return (
+    <form className="form-split-bill">
+      <h2>Split a bill with {friend.name}</h2>
+
+      <label>💰 Total Bill value:</label>
+      <input type="number" />
+
+      <label>💶 Your Expense:</label>
+      <input type="number" />
+
+      <label>💸 X's Expense:</label>
+      <input type="number" disabled />
+
+      <label>💳 Who's paying the bill?</label>
+      <select>
+        <option>You</option>
+        <option>X</option>
+      </select>
+
+      <Button>Split Bill</Button>
     </form>
   );
 }
