@@ -1,4 +1,4 @@
-// import uniqid from "uniqid";
+import uniqid from "uniqid";
 
 import { useState } from "react";
 
@@ -32,49 +32,35 @@ function Button({ onToggle, children }) {
 }
 
 export default function App() {
-  const [selectedFriend, setSelectedFriend] = useState(false);
+  // Form Add New Friend
+  const [formAddFriend, setFormAddFriend] = useState(false);
   const handleToggleAddFriend = () => {
-    setSelectedFriend(!selectedFriend);
+    setFormAddFriend(!formAddFriend);
+  };
+
+  // Friends list & Handle add new friend
+  const [friends, setFriends] = useState(initialFriends);
+  const handleAddNewFriend = (fr) => {
+    setFriends([...friends, fr]);
   };
 
   return (
     <div className="app">
       <div className="sidebar">
-        <FriendsList />
-        {selectedFriend && <FormAddFriend />}
+        <FriendsList friends={friends} />
+        {formAddFriend && <FormAddFriend onAddNewFriend={handleAddNewFriend} />}
         <Button onToggle={handleToggleAddFriend}>
-          {selectedFriend ? "Close" : "Add new friend"}
+          {formAddFriend ? "Close" : "Add new friend"}
         </Button>
       </div>
-
-      <form className="form-split-bill">
-        <h2>Split a bill with X</h2>
-
-        <label>💰 Total Bll value:</label>
-        <input type="number" />
-
-        <label>💶 Your Expense:</label>
-        <input type="number" />
-
-        <label>💸 X's Expense:</label>
-        <input type="number" disabled />
-
-        <label>💳 Who's paying the bill?</label>
-        <select>
-          <option>You</option>
-          <option>X</option>
-        </select>
-
-        <Button>Split Bill</Button>
-      </form>
     </div>
   );
 }
 
-function FriendsList() {
+function FriendsList({ friends }) {
   return (
     <ul>
-      {initialFriends.map((fr) => (
+      {friends.map((fr) => (
         <Friend friend={fr} key={fr.id} />
       ))}
     </ul>
@@ -102,12 +88,23 @@ function Friend({ friend }) {
   );
 }
 
-function FormAddFriend() {
+function FormAddFriend({ onSubmit, onAddNewFriend }) {
   const [image, setImage] = useState("https://i.pravatar.cc/48");
   const [name, setName] = useState("");
 
+  // Add New Friend to List
+  const handleAddFriend = (e) => {
+    e.preventDefault();
+    if (!name || !image) return;
+
+    const newFriend = { id: uniqid(), name, image, balance: 0 };
+
+    // call App func with the new friend obj
+    onAddNewFriend(newFriend);
+  };
+
   return (
-    <form className="form-add-friend">
+    <form className="form-add-friend" onSubmit={handleAddFriend}>
       <label>👭Friend Name</label>
       <input
         type="text"
