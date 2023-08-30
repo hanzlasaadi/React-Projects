@@ -44,10 +44,19 @@ export default function App() {
     setFriends([...friends, fr]);
   };
 
+  const [friendSelected, setFriendSelected] = useState(null);
+  const handleSelectFriend = (id) => {
+    setFriendSelected(id);
+  };
+
   return (
     <div className="app">
       <div className="sidebar">
-        <FriendsList friends={friends} />
+        <FriendsList
+          friends={friends}
+          onSelectFriend={handleSelectFriend}
+          selectedFriend={friendSelected}
+        />
         {formAddFriend && <FormAddFriend onAddNewFriend={handleAddNewFriend} />}
         <Button onToggle={handleToggleAddFriend}>
           {formAddFriend ? "Close" : "Add new friend"}
@@ -57,19 +66,26 @@ export default function App() {
   );
 }
 
-function FriendsList({ friends }) {
+function FriendsList({ friends, onSelectFriend, selectedFriend }) {
   return (
     <ul>
       {friends.map((fr) => (
-        <Friend friend={fr} key={fr.id} />
+        <Friend
+          friend={fr}
+          key={fr.id}
+          onSelectFriend={onSelectFriend}
+          selectedFriend={selectedFriend}
+        />
       ))}
     </ul>
   );
 }
 
-function Friend({ friend }) {
+function Friend({ friend, onSelectFriend, selectedFriend }) {
+  const selected = friend.id === selectedFriend;
+
   return (
-    <li>
+    <li className={selected ? "selected" : ""}>
       <img src={friend.image} alt={friend.name} />
       <h3>{friend.name}</h3>
       {friend.balance < 0 ? (
@@ -83,7 +99,14 @@ function Friend({ friend }) {
       ) : (
         <p>You and {friend.name} are even`</p>
       )}
-      <button className="button">Select</button>
+      <button
+        className="button"
+        onClick={() =>
+          onSelectFriend(friend.id === selectedFriend ? null : friend.id)
+        }
+      >
+        {selected ? "Close" : "Select"}
+      </button>
     </li>
   );
 }
