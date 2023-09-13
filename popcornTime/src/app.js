@@ -24,13 +24,22 @@ export default function App() {
         <Results movies={movies} />
       </Navbar>
       <Main>
-        <Box>
+        <Box element={<QueryMoviesList movies={movies} />} />
+        <Box
+          element={
+            <>
+              <Summary watched={watched} />
+              <WatchedMoviesList watched={watched} />
+            </>
+          }
+        />
+        {/* <Box>
           <QueryMoviesList movies={movies} />
         </Box>
         <Box>
           <Summary watched={watched} />
           <WatchedMoviesList watched={watched} />
-        </Box>
+        </Box> */}
       </Main>
     </>
   );
