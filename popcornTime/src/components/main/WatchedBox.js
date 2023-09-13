@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { tempWatchedData } from "./tempData";
 import { Summary } from "./Summary";
 import { WatchedMoviesList } from "./WatchedMoviesList";
 
-export function WatchedBox() {
+export function WatchedBox({ watchedData }) {
   const [isOpen2, setIsOpen2] = useState(true);
-  const [watched, setWatched] = useState(tempWatchedData);
+  const [watched, setWatched] = useState(watchedData);
 
   return (
     <div className="box">

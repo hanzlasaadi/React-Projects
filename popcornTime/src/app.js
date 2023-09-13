@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-import { Navbar } from "./components/Navbar";
-import { Main } from "./components/Main";
+import { Navbar } from "./components/nav/Navbar";
+import { Main } from "./components/main/Main";
 
-import { tempMovieData } from "./components/tempData";
+import { tempMovieData, tempWatchedData } from "./util/tempData";
 
 export default function App() {
   const [movies, setMovies] = useState(tempMovieData);
@@ -11,7 +11,7 @@ export default function App() {
   return (
     <>
       <Navbar movies={movies} />
-      <Main movies={movies} />
+      <Main movies={movies} watchedData={tempWatchedData} />
     </>
   );
 }

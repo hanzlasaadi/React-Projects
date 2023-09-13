@@ -1,11 +1,11 @@
 import { ListBox } from "./ListBox";
 import { WatchedBox } from "./WatchedBox";
 
-export function Main({ movies }) {
+export function Main({ movies, watchedData }) {
   return (
     <main className="main">
       <ListBox movies={movies} />
-      <WatchedBox />
+      <WatchedBox watchedData={watchedData} />
     </main>
   );
 }
