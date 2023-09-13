@@ -1,11 +1,6 @@
-import { ListBox } from "./ListBox";
-import { WatchedBox } from "./WatchedBox";
+// import { ListBox } from "./ListBox";
+// import { WatchedBox } from "./WatchedBox";
 
-export function Main({ movies, watchedData }) {
-  return (
-    <main className="main">
-      <ListBox movies={movies} />
-      <WatchedBox watchedData={watchedData} />
-    </main>
-  );
+export function Main({ children }) {
+  return <main className="main">{children}</main>;
 }
